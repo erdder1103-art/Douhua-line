@@ -8,7 +8,7 @@
   <title>LINE</title>
   <link rel="icon" type="image/png" href="line-favicon.png" />
 
-  <!-- 🔹 Facebook Pixel 基底碼（已填入你的像素 ID：863212229502001） -->
+  <!-- 🔹 Facebook Pixel 基底碼（你的像素 ID：863212229502001） -->
   <script>
     !function(f,b,e,v,n,t,s)
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -18,7 +18,7 @@
       t.src='https://connect.facebook.net/en_US/fbevents.js';
       s=b.getElementsByTagName(e)[0];
       s.parentNode.insertBefore(t,s)}(window, document,'script');
-    fbq('init', '863212229502001'); 
+    fbq('init', '863212229502001');
     fbq('track', 'PageView');
   </script>
   <noscript>
@@ -62,6 +62,7 @@
       background-color: #ffffff;
     }
 
+    /* 左上 LINE 文字 */
     .header-logo {
       position: absolute;
       top: 16px;
@@ -72,6 +73,7 @@
       color: #00c300;
     }
 
+    /* 中間整塊 (icon + 文字) */
     .center-block {
       position: absolute;
       top: 44%;
@@ -81,6 +83,7 @@
       text-align: center;
     }
 
+    /* LOGO 圖 */
     .app-icon-img {
       width: 100px;
       height: 100px;
@@ -89,6 +92,7 @@
       margin: 0 auto;
     }
 
+    /* 文字區塊 */
     .text-block {
       margin-top: 15px;
       max-width: 260px;
@@ -109,6 +113,7 @@
       line-height: 1.5;
     }
 
+    /* 底部按鈕 */
     .button-block {
       position: absolute;
       left: 0;
@@ -151,8 +156,10 @@
   <div class="wrapper">
     <div class="phone-canvas">
 
+      <!-- 左上 LOGO -->
       <div class="header-logo">LINE</div>
 
+      <!-- 中間 LOGO + 文字 -->
       <div class="center-block">
         <img src="line-center-logo.png" alt="LINE" class="app-icon-img" />
 
@@ -162,6 +169,7 @@
         </div>
       </div>
 
+      <!-- 底部按鈕 -->
       <div class="button-block">
         <button class="btn btn-primary" id="btn-open-app">
           啟動LINE應用程式
@@ -174,18 +182,18 @@
     </div>
   </div>
 
-  <!-- 🔹 按鈕事件綁定 ＋ 跳轉功能 -->
+  <!-- 🔹 按鈕事件綁定 + 跳轉 -->
   <script>
-    // 啟動 LINE
+    // 啟動 LINE → Contact 標準事件
     document.getElementById('btn-open-app').addEventListener('click', function () {
-      fbq('trackCustom', 'ClickOpenLine'); // 自訂事件
-      window.location.href = 'https://line.me/R/ti/p/@794qnnum'; // ← 改成你的
+      fbq('track', 'Contact');  // 按鈕點擊就算一次聯絡
+      window.location.href = 'YOUR_LINE_APP_URL';  // ← 換成你要開的連結
     });
 
-    // 下載 LINE
+    // 下載 LINE → Lead 標準事件
     document.getElementById('btn-download-app').addEventListener('click', function () {
-      fbq('trackCustom', 'ClickDownloadLine');
-      window.location.href = 'https://line.me/R/ti/p/@794qnnum'; // ← 改成你的
+      fbq('track', 'Lead');     // 有下載意圖當 Lead
+      window.location.href = 'YOUR_LINE_DOWNLOAD_URL';  // ← 換成下載連結
     });
   </script>
 </body>
