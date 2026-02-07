@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8" />
@@ -119,21 +119,27 @@
 
       <!-- ✅ LINE -->
       <a href="https://line.me/R/app/2008156723-E1ynJx1P?redeemcode=DOUHUA5487"
-         onclick="trackLead();">
-        <img class="btnImg" src="static/picture/10月9日14-e1760416892526-1024x303.png" alt="加LINE領優惠" loading="eager" decoding="async">
-      </a>
+   onclick="return trackLeadAndGo(event, this.href);">
+  <img class="btnImg" src="static/picture/10月9日14-e1760416892526-1024x303.png"
+       alt="加LINE領優惠" loading="eager" decoding="async">
+</a>
 
-    </main>
-  </div>
+<script>
+  function trackLeadAndGo(e, url) {
+    try {
+      if (typeof fbq === "function") {
+        fbq("track", "Lead", {
+          content_name: "Click_LINE_Redeem",
+          redeem_code: "DOUHUA5487",
+          destination: "line.me"
+        });
+      }
+    } catch(err) {}
 
-  <script>
-    function trackLead() {
-      try {
-        if (typeof fbq === "function") {
-          fbq("track", "Lead");
-        }
-      } catch(err) {}
-    }
-  </script>
+    if (e && e.preventDefault) e.preventDefault();
+    setTimeout(() => { window.location.href = url; }, 200);
+    return false;
+  }
+</script>
 </body>
 </html>
