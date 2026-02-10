@@ -74,7 +74,7 @@
     .btnImg:active{ transform: translateY(1px); }
   </style>
 
-  <!-- Meta Pixel -->
+  <!-- Meta Pixel Code (ID: 839080675810591) -->
   <script>
     !function(f,b,e,v,n,t,s){
       if(f.fbq) return;
@@ -91,30 +91,62 @@
     fbq('init', '839080675810591');
     fbq('track', 'PageView');
   </script>
+
+  <noscript>
+    <img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=839080675810591&ev=PageView&noscript=1" />
+  </noscript>
 </head>
 
 <body>
   <div class="stage">
     <main class="wrap">
       <section class="hero">
-        <img src="static/picture/10月9日19-1024x1024.png" alt="">
+        <img src="static/picture/10月9日19-1024x1024.png" alt="" loading="eager" decoding="async">
       </section>
 
       <a href="https://line.me/R/ti/p/@794qnnum"
          onclick="return trackLeadAndGo(event, this.href);">
         <img class="btnImg"
              src="static/picture/10月9日14-e1760416892526-1024x303.png"
-             alt="加LINE領優惠">
+             alt="加LINE領優惠"
+             loading="eager"
+             decoding="async">
       </a>
     </main>
   </div>
 
   <script>
+    // 灰胖落空的 Cloudflare Worker（CAPI API）
+    const CAPI_ENDPOINT = "https://late-haze-2212.skype138388.workers.dev/";
+
     function makeEventId(prefix){
       return prefix + "_" + Date.now() + "_" + Math.random().toString(36).slice(2);
     }
 
+    function sendCapiLead(eventId){
+      // GitHub Pages → Worker → Meta CAPI
+      // 不要 await，避免影響跳轉速度
+      fetch(CAPI_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          event_name: "Lead",
+          event_id: eventId,
+          event_source_url: location.href,
+          custom_data: {
+            brand: "灰胖落空",
+            campaign_type: "live",
+            cta_type: "line",
+            destination: "line.me",
+            destination_id: "@794qnnum"
+          }
+        })
+      }).catch(()=>{});
+    }
+
     function trackLeadAndGo(e, url) {
+      // ✅ 4 小時內同設備只算一次 Lead
       const windowMs = 4 * 60 * 60 * 1000;
       const key = "lead_sent_ts";
       const lastTs = parseInt(localStorage.getItem(key) || "0", 10);
@@ -126,6 +158,7 @@
       if (!alreadySent && typeof fbq === "function") {
         const eventId = makeEventId("lead");
 
+        // ① Browser Pixel（主事件，優化用）
         fbq("track", "Lead", {
           brand: "灰胖落空",
           campaign_type: "live",
@@ -134,6 +167,7 @@
           destination_id: "@794qnnum"
         }, { eventID: eventId });
 
+        // ② Browser 自訂事件（看品質）
         fbq("trackCustom", "ClickCTA", {
           brand: "灰胖落空",
           campaign_type: "live",
@@ -142,12 +176,15 @@
           destination_id: "@794qnnum"
         });
 
+        // ③ Server CAPI（同 eventId 去重）
+        sendCapiLead(eventId);
+
         localStorage.setItem(key, String(now));
       }
 
       setTimeout(() => {
         window.location.href = url;
-      }, alreadySent ? 0 : 220);
+      }, alreadySent ? 0 : 240);
 
       return false;
     }
