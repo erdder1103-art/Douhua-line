@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>灰胖落空-1:130合法娛樂城</title>
 
-  <!-- ✅ GitHub Pages 子路徑更穩：用相對路徑 -->
   <link rel="icon" href="favicon.ico" sizes="any">
 
   <style>
@@ -71,9 +70,7 @@
       user-select: none;
       -webkit-tap-highlight-color: transparent;
     }
-    .btnImg:active{
-      transform: translateY(1px);
-    }
+    .btnImg:active{ transform: translateY(1px); }
   </style>
 
   <!-- Meta Pixel Code (ID: 839080675810591) -->
@@ -98,36 +95,32 @@
     <img height="1" width="1" style="display:none"
       src="https://www.facebook.com/tr?id=839080675810591&ev=PageView&noscript=1" />
   </noscript>
-  <!-- End Meta Pixel Code -->
 </head>
 
 <body>
   <div class="stage">
     <main class="wrap">
-
-      <!-- 圖1 -->
       <section class="hero">
         <img src="static/picture/10月9日19-1024x1024.png" alt="" loading="eager" decoding="async">
       </section>
 
-      <!-- ✅ LINE -->
       <a href="https://line.me/R/ti/p/@794qnnum"
          onclick="return trackLeadAndGo(event, this.href);">
         <img class="btnImg"
              src="static/picture/10月9日14-e1760416892526-1024x303.png"
              alt="加LINE領優惠" loading="eager" decoding="async">
       </a>
-
     </main>
   </div>
 
   <script>
     function trackLeadAndGo(e, url) {
-      // ✅ 同一天同設備只算一次 Lead（避免重複點擊灌事件）
-      const today = new Date().toISOString().slice(0, 10); // e.g. 2026-02-08
-      const key = "lead_sent_" + today;
-
-      const alreadySent = localStorage.getItem(key) === "1";
+      // ✅ 4 小時內同設備只算一次 Lead（直播 4H 一場最適合）
+      const windowMs = 4 * 60 * 60 * 1000;
+      const key = "lead_sent_ts";
+      const lastTs = parseInt(localStorage.getItem(key) || "0", 10);
+      const now = Date.now();
+      const alreadySent = lastTs && (now - lastTs) < windowMs;
 
       if (!alreadySent) {
         try {
@@ -139,12 +132,9 @@
             });
           }
         } catch (err) {}
-
-        localStorage.setItem(key, "1");
+        localStorage.setItem(key, String(now));
       }
 
-      // 第一次：延遲 200ms 讓事件更容易送出去
-      // 已送過：直接跳轉（不用等）
       if (e && e.preventDefault) e.preventDefault();
       setTimeout(() => { window.location.href = url; }, alreadySent ? 0 : 200);
       return false;
