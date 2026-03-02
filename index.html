@@ -1,193 +1,219 @@
 <!doctype html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>灰胖落空-1:130合法娛樂城</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>灰胖落空-島灰&小胖</title>
 
-  <link rel="icon" href="favicon.ico" sizes="any">
+<script>
+!function(f,b,e,v,n,t,s){
+if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)
+}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
 
-  <style>
-    :root { color-scheme: light; }
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
+fbq('init','839080675810591');
+fbq('track','PageView');
+</script>
 
-    body{
-      margin: 0;
-      min-height: 100vh;
-      font-family: system-ui, -apple-system, "Microsoft JhengHei", sans-serif;
-      background: url("static/image/bg.jpg") center / cover no-repeat;
-    }
+<noscript>
+<img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=839080675810591&ev=PageView&noscript=1" />
+</noscript>
 
-    .stage{
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 12px;
-      padding-top: calc(12px + env(safe-area-inset-top));
-      padding-bottom: calc(12px + env(safe-area-inset-bottom));
-    }
+<style>
+:root{ --max-w:420px; }
+*{ box-sizing:border-box; }
 
-    .wrap{
-      width: 100%;
-      max-width: 480px;
-      display: grid;
-      gap: 14px;
-    }
+body{
+  margin:0;
+  background:#000;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  min-height:100svh;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans TC",Arial,sans-serif;
+}
 
-    .hero{
-      width: 100%;
-      border-radius: 18px;
-      overflow: hidden;
-      box-shadow: 0 14px 40px rgba(0,0,0,0.25);
-    }
+.stage{
+  width:min(100vw,var(--max-w));
+  aspect-ratio:9/16;
+  position:relative;
+  overflow:hidden;
+  border-radius:20px;
+  background:#000;
+}
 
-    .hero img{
-      width: 100%;
-      display: block;
-      height: 68vh;
-      max-height: 68vh;
-      object-fit: cover;
-      object-position: center top;
-    }
+.bg{
+  position:absolute;
+  inset:0;
+  background:url("./images/bg.jpg") center/cover no-repeat;
+  z-index:0;
+}
 
-    @media (min-width: 769px){
-      .hero img{
-        height: auto;
-        max-height: none;
-        object-fit: contain;
-      }
-    }
+.coins-layer{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:2;
+}
 
-    .btnImg{
-      display: block;
-      width: 78%;
-      max-width: 320px;
-      margin: 0 auto;
-      border-radius: 18px;
-      box-shadow: 0 12px 26px rgba(0,0,0,0.22);
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-      cursor: pointer;
-    }
-    .btnImg:active{ transform: translateY(1px); }
-  </style>
+.logo{
+  position:absolute;
+  top:10px;
+  left:10px;
+  width:100px;
+  z-index:6;
+}
 
-  <!-- Meta Pixel Code (ID: 839080675810591) -->
-  <script>
-    !function(f,b,e,v,n,t,s){
-      if(f.fbq) return;
-      n=f.fbq=function(){ n.callMethod ? n.callMethod.apply(n,arguments) : n.queue.push(arguments) };
-      if(!f._fbq) f._fbq=n;
-      n.push=n; n.loaded=!0; n.version='2.0';
-      n.queue=[];
-      t=b.createElement(e); t.async=!0;
-      t.src=v;
-      s=b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t,s);
-    }(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+.ip{
+  position:absolute;
+  top:20%;
+  left:50%;
+  transform:translateX(-50%);
+  width:90%;
+  max-width:360px;
+  z-index:4;
+}
 
-    fbq('init', '839080675810591');
-    fbq('track', 'PageView');
-  </script>
+.btn-wrap{
+  position:absolute;
+  bottom:5px;
+  left:50%;
+  transform:translateX(-50%);
+  width:85%;
+  max-width:280px;
+  z-index:10;
+  animation:breatheGlow 1.6s ease-in-out infinite;
+}
 
-  <noscript>
-    <img height="1" width="1" style="display:none"
-      src="https://www.facebook.com/tr?id=839080675810591&ev=PageView&noscript=1" />
-  </noscript>
+.btn-img{
+  width:100%;
+  display:block;
+  cursor:pointer;
+  transition:transform .12s ease,opacity .12s ease;
+  user-select:none;
+  -webkit-user-drag:none;
+}
+
+.btn-img:active{ transform:scale(0.97); }
+
+@keyframes breatheGlow{
+  0%{ filter:drop-shadow(0 0 0 rgba(255,215,0,0)); transform:translateX(-50%) scale(1); }
+  50%{ filter:drop-shadow(0 0 18px rgba(255,215,0,.55)); transform:translateX(-50%) scale(1.02); }
+  100%{ filter:drop-shadow(0 0 0 rgba(255,215,0,0)); transform:translateX(-50%) scale(1); }
+}
+
+.coin{
+  position:absolute;
+  top:-12%;
+  width:var(--size);
+  height:var(--size);
+  border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, #fff3b0 0%, #ffd166 25%, #f4b400 55%, #c98a00 100%);
+  box-shadow:0 10px 18px rgba(0,0,0,.25);
+  opacity:.95;
+  animation:fall linear forwards,spin linear infinite;
+}
+
+@keyframes fall{
+  to{ transform:translate3d(0,130vh,0) rotate(360deg); opacity:0; }
+}
+@keyframes spin{
+  to{ rotate:360deg; }
+}
+
+.tg-fab{
+  position:absolute;
+  right:14px;
+  top:56%;
+  transform:translateY(-50%);
+  width:52px;
+  height:52px;
+  z-index:12;
+  display:block;
+  animation:tgBreathe 1.6s ease-in-out infinite;
+}
+
+.tg-fab::before{
+  content:"";
+  width:52px;
+  height:52px;
+  display:block;
+  background:url("./images/tg.png") center/contain no-repeat;
+  filter:drop-shadow(0 6px 10px rgba(0,0,0,.25));
+}
+
+@keyframes tgBreathe{
+  0%{ transform:translateY(-50%) scale(1); opacity:.92; }
+  50%{ transform:translateY(-50%) scale(1.08); opacity:1; }
+  100%{ transform:translateY(-50%) scale(1); opacity:.92; }
+}
+</style>
 </head>
 
 <body>
-  <div class="stage">
-    <main class="wrap">
-      <section class="hero">
-        <img src="static/picture/10月9日19-1024x1024.png" alt="" loading="eager" decoding="async">
-      </section>
+<div class="stage">
+  <div class="bg"></div>
+  <div class="coins-layer" id="coinsLayer"></div>
 
-      <a href="https://line.me/R/ti/p/@794qnnum"
-         onclick="return trackLeadAndGo(event, this.href);">
-        <img class="btnImg"
-             src="static/picture/10月9日14-e1760416892526-1024x303.png"
-             alt="加LINE領優惠"
-             loading="eager"
-             decoding="async">
-      </a>
-    </main>
+  <img src="./images/logo.png" class="logo">
+  <img src="./images/ip.png" class="ip">
+
+  <div class="btn-wrap">
+    <img src="./images/btn.png" class="btn-img" id="ctaBtn">
   </div>
 
-  <script>
-    // 灰胖落空的 Cloudflare Worker（CAPI API）
-    const CAPI_ENDPOINT = "https://late-haze-2212.skype138388.workers.dev/";
+  <a class="tg-fab" href="https://line.me/R/ti/p/@794qnnum" target="_blank" rel="noopener"></a>
+</div>
 
-    function makeEventId(prefix){
-      return prefix + "_" + Date.now() + "_" + Math.random().toString(36).slice(2);
-    }
+<script>
+const TARGET_URL="https://line.me/R/ti/p/@794qnnum";
 
-    function sendCapiLead(eventId){
-      // GitHub Pages → Worker → Meta CAPI
-      // 不要 await，避免影響跳轉速度
-      fetch(CAPI_ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          event_name: "Lead",
-          event_id: eventId,
-          event_source_url: location.href,
-          custom_data: {
-            brand: "灰胖落空",
-            campaign_type: "live",
-            cta_type: "line",
-            destination: "line.me",
-            destination_id: "@794qnnum"
-          }
-        })
-      }).catch(()=>{});
-    }
+const layer=document.getElementById("coinsLayer");
 
-    function trackLeadAndGo(e, url) {
-      // ✅ 4 小時內同設備只算一次 Lead
-      const windowMs = 4 * 60 * 60 * 1000;
-      const key = "lead_sent_ts";
-      const lastTs = parseInt(localStorage.getItem(key) || "0", 10);
-      const now = Date.now();
-      const alreadySent = lastTs && (now - lastTs) < windowMs;
+function spawnCoin(){
+  const coin=document.createElement("div");
+  coin.className="coin";
+  const size=Math.floor(10+Math.random()*18);
+  const left=Math.random()*100;
+  const dur=6.5+Math.random()*4.5;
+  const spinDur=0.8+Math.random()*1.2;
 
-      if (e && e.preventDefault) e.preventDefault();
+  coin.style.setProperty("--size",size+"px");
+  coin.style.left=left+"%";
+  coin.style.animationDuration=`${dur}s,${spinDur}s`;
 
-      if (!alreadySent && typeof fbq === "function") {
-        const eventId = makeEventId("lead");
+  layer.appendChild(coin);
+  setTimeout(()=>coin.remove(),dur*1000+200);
+}
 
-        // ① Browser Pixel（主事件，優化用）
-        fbq("track", "Lead", {
-          brand: "灰胖落空",
-          campaign_type: "live",
-          cta_type: "line",
-          destination: "line.me",
-          destination_id: "@794qnnum"
-        }, { eventID: eventId });
+let coinTimer=setInterval(()=>{
+  const n=1+Math.floor(Math.random()*2);
+  for(let i=0;i<n;i++) spawnCoin();
+},900);
 
-        // ② Browser 自訂事件（看品質）
-        fbq("trackCustom", "ClickCTA", {
-          brand: "灰胖落空",
-          campaign_type: "live",
-          cta_type: "line",
-          destination: "line.me",
-          destination_id: "@794qnnum"
-        });
+document.addEventListener("visibilitychange",()=>{
+  if(document.hidden){
+    clearInterval(coinTimer);
+  }else{
+    coinTimer=setInterval(()=>{
+      const n=1+Math.floor(Math.random()*2);
+      for(let i=0;i<n;i++) spawnCoin();
+    },900);
+  }
+});
 
-        // ③ Server CAPI（同 eventId 去重）
-        sendCapiLead(eventId);
+document.getElementById("ctaBtn").addEventListener("click",()=>{
+  if(typeof fbq==="function"){ fbq("track","Lead"); }
+  setTimeout(()=>{ window.location.href=TARGET_URL; },150);
+});
+</script>
 
-        localStorage.setItem(key, String(now));
-      }
-
-      setTimeout(() => {
-        window.location.href = url;
-      }, alreadySent ? 0 : 240);
-
-      return false;
-    }
-  </script>
 </body>
 </html>
