@@ -162,56 +162,70 @@ body{
   <div class="bg"></div>
   <div class="coins-layer" id="coinsLayer"></div>
 
-  <img src="./images/logo.png" class="logo">
-  <img src="./images/ip.png" class="ip">
+  <img src="./images/logo.png" class="logo" alt="">
+  <img src="./images/ip.png" class="ip" alt="">
 
   <div class="btn-wrap">
-    <img src="./images/btn.png" class="btn-img" id="ctaBtn">
+    <img src="./images/btn.png" class="btn-img" id="ctaBtn" alt="">
   </div>
 
-  <a class="tg-fab" href="https://line.me/R/ti/p/@794qnnum" target="_blank" rel="noopener"></a>
+  <a class="tg-fab" id="lineBtn" href="https://line.me/R/ti/p/@794qnnum" rel="noopener" aria-label="LINE"></a>
 </div>
 
 <script>
-const TARGET_URL="https://line.me/R/ti/p/@794qnnum";
-
-const layer=document.getElementById("coinsLayer");
+const TARGET_URL = "https://line.me/R/ti/p/@794qnnum";
+const layer = document.getElementById("coinsLayer");
 
 function spawnCoin(){
-  const coin=document.createElement("div");
-  coin.className="coin";
-  const size=Math.floor(10+Math.random()*18);
-  const left=Math.random()*100;
-  const dur=6.5+Math.random()*4.5;
-  const spinDur=0.8+Math.random()*1.2;
+  const coin = document.createElement("div");
+  coin.className = "coin";
+  const size = Math.floor(10 + Math.random() * 18);
+  const left = Math.random() * 100;
+  const dur = 6.5 + Math.random() * 4.5;
+  const spinDur = 0.8 + Math.random() * 1.2;
 
-  coin.style.setProperty("--size",size+"px");
-  coin.style.left=left+"%";
-  coin.style.animationDuration=`${dur}s,${spinDur}s`;
+  coin.style.setProperty("--size", size + "px");
+  coin.style.left = left + "%";
+  coin.style.animationDuration = `${dur}s,${spinDur}s`;
 
   layer.appendChild(coin);
-  setTimeout(()=>coin.remove(),dur*1000+200);
+  setTimeout(() => coin.remove(), dur * 1000 + 200);
 }
 
-let coinTimer=setInterval(()=>{
-  const n=1+Math.floor(Math.random()*2);
+let coinTimer = setInterval(() => {
+  const n = 1 + Math.floor(Math.random() * 2);
   for(let i=0;i<n;i++) spawnCoin();
-},900);
+}, 900);
 
-document.addEventListener("visibilitychange",()=>{
+document.addEventListener("visibilitychange", () => {
   if(document.hidden){
     clearInterval(coinTimer);
   }else{
-    coinTimer=setInterval(()=>{
-      const n=1+Math.floor(Math.random()*2);
+    coinTimer = setInterval(() => {
+      const n = 1 + Math.floor(Math.random() * 2);
       for(let i=0;i<n;i++) spawnCoin();
-    },900);
+    }, 900);
   }
 });
 
-document.getElementById("ctaBtn").addEventListener("click",()=>{
-  if(typeof fbq==="function"){ fbq("track","Lead"); }
-  setTimeout(()=>{ window.location.href=TARGET_URL; },150);
+function goLine(trackName){
+  try{
+    if(typeof fbq === "function" && trackName){
+      fbq("track", trackName);
+    }
+  }catch(e){}
+  requestAnimationFrame(() => {
+    setTimeout(() => { window.location.href = TARGET_URL; }, 90);
+  });
+}
+
+document.getElementById("ctaBtn").addEventListener("click", () => {
+  goLine("Lead");
+});
+
+document.getElementById("lineBtn").addEventListener("click", (e) => {
+  e.preventDefault();
+  goLine("Contact");
 });
 </script>
 
