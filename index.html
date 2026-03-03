@@ -63,8 +63,6 @@ body{
   transform:translateX(-50%);
   width:90%;
 }
-
-/* 🔥 動態按鈕效果 */
 .btnWrapper{
   position:absolute;
   bottom:6%;
@@ -72,27 +70,16 @@ body{
   transform:translateX(-50%);
   width:80%;
 }
-
 .btn{
   width:100%;
   cursor:pointer;
   display:block;
   animation:breath 1.8s ease-in-out infinite;
 }
-
 @keyframes breath{
-  0%{
-    transform:scale(1);
-    filter:drop-shadow(0 0 0 rgba(0,255,100,.0));
-  }
-  50%{
-    transform:scale(1.08);
-    filter:drop-shadow(0 0 25px rgba(0,255,100,.7));
-  }
-  100%{
-    transform:scale(1);
-    filter:drop-shadow(0 0 0 rgba(0,255,100,.0));
-  }
+  0%{transform:scale(1);}
+  50%{transform:scale(1.08);}
+  100%{transform:scale(1);}
 }
 </style>
 </head>
@@ -122,68 +109,13 @@ function uuidv4() {
   });
 }
 
-function looksLikeBot() {
-  const ua = (navigator.userAgent || "").toLowerCase();
-  const botRe = /(bot|crawler|spider|slurp|curl|wget|python|httpclient|headless|phantom|selenium|playwright|puppeteer)/i;
-  if (botRe.test(ua)) return true;
-  if (navigator.webdriver) return true;
-  return false;
-}
-
-let userGestureOk = false;
-let sessionNonce = null;
-
-function ensureNonce() {
-  if (sessionNonce) return sessionNonce;
-  const key = "wuho_nonce";
-  const existing = sessionStorage.getItem(key);
-  if (existing) { sessionNonce = existing; return sessionNonce; }
-  sessionNonce = uuidv4() + "-" + Date.now().toString(36);
-  sessionStorage.setItem(key, sessionNonce);
-  return sessionNonce;
-}
-
-function markGesture() {
-  userGestureOk = true;
-  ensureNonce();
-  window.removeEventListener("pointerdown", markGesture, true);
-  window.removeEventListener("touchstart", markGesture, true);
-  window.removeEventListener("keydown", markGesture, true);
-}
-window.addEventListener("pointerdown", markGesture, true);
-window.addEventListener("touchstart", markGesture, true);
-window.addEventListener("keydown", markGesture, true);
-
-async function fireLeadAndCapi(eventId) {
-  try {
-    fbq('track','Lead',{content_name:'line_click'},{eventID:eventId});
-  } catch(e){}
-
-  try {
-    await fetch('https://line-go-me-production.up.railway.app/api/lead', {
-      method:'POST',
-      headers:{
-        'Content-Type':'application/json',
-        'X-Nonce': ensureNonce()
-      },
-      body: JSON.stringify({
-        event_id:eventId,
-        event_source_url:window.location.href
-      })
-    });
-  } catch(e){}
-}
-
-document.getElementById("lineBtn").addEventListener("click",function(e){
-  if (looksLikeBot()) return;
-
-  if (!userGestureOk){
-    e.preventDefault();
-    return;
-  }
-
+document.getElementById("lineBtn").addEventListener("click",function(){
   const eventId = uuidv4();
-  fireLeadAndCapi(eventId);
+
+  fbq('track','Lead',
+    { content_name:'line_click' },
+    { eventID:eventId }
+  );
 });
 </script>
 
