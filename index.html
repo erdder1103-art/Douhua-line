@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>灰胖落空</title>
+
+<!-- Meta Pixel -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
+(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+
+fbq('init','839080675810591');
+fbq('track','PageView');
+</script>
+
+<noscript>
+<img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=839080675810591&ev=PageView&noscript=1"/>
+</noscript>
+
+<style>
+body{
+  margin:0;
+  background:#000;
+  font-family:system-ui,-apple-system,"PingFang TC","Noto Sans TC",Arial;
+}
+.wrapper{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+}
+.frame{
+  position:relative;
+  width:100%;
+  max-width:420px;
+  aspect-ratio:9/16;
+  overflow:hidden;
+}
+.bg{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.logo{
+  position:absolute;
+  top:-5%;
+  left:50%;
+  transform:translateX(-50%);
+  width:60%;
+}
+.ip{
+  position:absolute;
+  bottom:12%;
+  left:50%;
+  transform:translateX(-50%);
+  width:90%;
+}
+
+/* 🔥 動態按鈕效果 */
+.btnWrapper{
+  position:absolute;
+  bottom:6%;
+  left:50%;
+  transform:translateX(-50%);
+  width:80%;
+}
+
+.btn{
+  width:100%;
+  cursor:pointer;
+  display:block;
+  animation:breath 1.8s ease-in-out infinite;
+}
+
+@keyframes breath{
+  0%{
+    transform:scale(1);
+    filter:drop-shadow(0 0 0 rgba(0,255,100,.0));
+  }
+  50%{
+    transform:scale(1.08);
+    filter:drop-shadow(0 0 25px rgba(0,255,100,.7));
+  }
+  100%{
+    transform:scale(1);
+    filter:drop-shadow(0 0 0 rgba(0,255,100,.0));
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="wrapper">
+<div class="frame">
+
+<img src="assets/bg.jpg" class="bg">
+<img src="assets/logo.png" class="logo">
+<img src="assets/ip.png" class="ip">
+
+<div class="btnWrapper">
+  <a href="https://line.me/R/ti/p/@794qnnum" id="lineBtn">
+    <img src="assets/btn.png" class="btn">
+  </a>
+</div>
+
+</div>
+</div>
+
+<script>
+function uuidv4() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){
+    var r=Math.random()*16|0,v=c=='x'?r:(r&0x3|0x8);
+    return v.toString(16);
+  });
+}
+
+function looksLikeBot() {
+  const ua = (navigator.userAgent || "").toLowerCase();
+  const botRe = /(bot|crawler|spider|slurp|curl|wget|python|httpclient|headless|phantom|selenium|playwright|puppeteer)/i;
+  if (botRe.test(ua)) return true;
+  if (navigator.webdriver) return true;
+  return false;
+}
+
+let userGestureOk = false;
+let sessionNonce = null;
+
+function ensureNonce() {
+  if (sessionNonce) return sessionNonce;
+  const key = "wuho_nonce";
+  const existing = sessionStorage.getItem(key);
+  if (existing) { sessionNonce = existing; return sessionNonce; }
+  sessionNonce = uuidv4() + "-" + Date.now().toString(36);
+  sessionStorage.setItem(key, sessionNonce);
+  return sessionNonce;
+}
+
+function markGesture() {
+  userGestureOk = true;
+  ensureNonce();
+  window.removeEventListener("pointerdown", markGesture, true);
+  window.removeEventListener("touchstart", markGesture, true);
+  window.removeEventListener("keydown", markGesture, true);
+}
+window.addEventListener("pointerdown", markGesture, true);
+window.addEventListener("touchstart", markGesture, true);
+window.addEventListener("keydown", markGesture, true);
+
+async function fireLeadAndCapi(eventId) {
+  try {
+    fbq('track','Lead',{content_name:'line_click'},{eventID:eventId});
+  } catch(e){}
+
+  try {
+    await fetch('/api/lead',{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'X-Nonce': ensureNonce()
+      },
+      body: JSON.stringify({
+        event_id:eventId,
+        event_source_url:window.location.href
+      })
+    });
+  } catch(e){}
+}
+
+document.getElementById("lineBtn").addEventListener("click",function(e){
+  if (looksLikeBot()) return;
+
+  if (!userGestureOk){
+    e.preventDefault();
+    return;
+  }
+
+  const eventId = uuidv4();
+  fireLeadAndCapi(eventId);
+});
+</script>
+
+</body>
+</html>
