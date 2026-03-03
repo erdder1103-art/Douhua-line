@@ -160,7 +160,7 @@ async function fireLeadAndCapi(eventId) {
   } catch(e){}
 
   try {
-    await fetch('line-go-me-production.up.railway.app',{
+    await fetch('https://line-go-me-production.up.railway.app/api/lead', {
       method:'POST',
       headers:{
         'Content-Type':'application/json',
