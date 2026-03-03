@@ -15,7 +15,7 @@ t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)
 }(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
 
-fbq('init','839080675810591');
+fbq('init','839080675810591',{},{autoConfig:false});
 fbq('track','PageView');
 </script>
 
@@ -208,15 +208,18 @@ document.addEventListener("visibilitychange", () => {
   }
 });
 
+function eventId(){
+  return (Date.now().toString(36) + Math.random().toString(36).slice(2,8)).toUpperCase();
+}
+
 function goLine(trackName){
   try{
     if(typeof fbq === "function" && trackName){
-      fbq("track", trackName);
+      fbq("track", trackName, {}, { eventID: eventId() });
     }
   }catch(e){}
-  requestAnimationFrame(() => {
-    setTimeout(() => { window.location.href = TARGET_URL; }, 90);
-  });
+
+  setTimeout(() => { window.location.href = TARGET_URL; }, 450);
 }
 
 document.getElementById("ctaBtn").addEventListener("click", () => {
