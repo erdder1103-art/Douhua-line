@@ -5,14 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>灰胖落空</title>
 
-<!-- Meta Pixel -->
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
 n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
 n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
-(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
+(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
 
 fbq('init','839080675810591');
 fbq('track','PageView');
@@ -93,7 +91,7 @@ body{
 <img src="assets/ip.png" class="ip">
 
 <div class="btnWrapper">
-  <a href="https://line.me/R/ti/p/@794qnnum" id="lineBtn">
+  <a href="#" id="lineBtn">
     <img src="assets/btn.png" class="btn">
   </a>
 </div>
@@ -109,13 +107,26 @@ function uuidv4() {
   });
 }
 
-document.getElementById("lineBtn").addEventListener("click",function(){
-  const eventId = uuidv4();
+let clicked=false;
 
-  fbq('track','Lead',
-    { content_name:'line_click' },
-    { eventID:eventId }
-  );
+document.getElementById("lineBtn").addEventListener("click",function(e){
+  e.preventDefault();
+  if(clicked) return;
+  clicked=true;
+
+  const eventId=uuidv4();
+
+  try{
+    fbq('track','Contact',{content_name:'line_click'},{eventID:eventId});
+  }catch(e){}
+
+  try{
+    fbq('track','Lead',{content_name:'line_click'},{eventID:eventId});
+  }catch(e){}
+
+  setTimeout(function(){
+    window.location.href="https://line.me/R/ti/p/@794qnnum";
+  },150);
 });
 </script>
 
