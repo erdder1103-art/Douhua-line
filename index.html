@@ -15,102 +15,40 @@ t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
 fbq('init','839080675810591');
 fbq('init','941819505011774');
 
-fbq('track','PageView');
+fbq('trackSingle','839080675810591','PageView');
+fbq('trackSingle','941819505011774','PageView');
 </script>
 
 <noscript>
-<img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=839080675810591&ev=PageView&noscript=1"/>
-<img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=941819505011774&ev=PageView&noscript=1"/>
+<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=839080675810591&ev=PageView&noscript=1"/>
+<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=941819505011774&ev=PageView&noscript=1"/>
 </noscript>
 
 <style>
-body{
-  margin:0;
-  background:#000;
-  font-family:system-ui,-apple-system,"PingFang TC","Noto Sans TC",Arial;
-}
-.wrapper{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  min-height:100vh;
-}
-.frame{
-  position:relative;
-  width:100%;
-  max-width:420px;
-  aspect-ratio:9/16;
-  overflow:hidden;
-}
-.bg{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-.logo{
-  position:absolute;
-  top:-5%;
-  left:50%;
-  transform:translateX(-50%);
-  width:60%;
-}
-.ip{
-  position:absolute;
-  bottom:12%;
-  left:50%;
-  transform:translateX(-50%);
-  width:90%;
-}
-.btnWrapper{
-  position:absolute;
-  bottom:6%;
-  left:50%;
-  transform:translateX(-50%);
-  width:80%;
-}
-.btn{
-  width:100%;
-  cursor:pointer;
-  display:block;
-  animation:breath 1.8s ease-in-out infinite;
-}
-@keyframes breath{
-  0%{transform:scale(1);}
-  50%{transform:scale(1.08);}
-  100%{transform:scale(1);}
-}
+body{margin:0;background:#000;font-family:system-ui,-apple-system,"PingFang TC","Noto Sans TC",Arial;}
+.wrapper{display:flex;justify-content:center;align-items:center;min-height:100vh;}
+.frame{position:relative;width:100%;max-width:420px;aspect-ratio:9/16;overflow:hidden;}
+.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.logo{position:absolute;top:-5%;left:50%;transform:translateX(-50%);width:60%;}
+.ip{position:absolute;bottom:12%;left:50%;transform:translateX(-50%);width:90%;}
+.btnWrapper{position:absolute;bottom:6%;left:50%;transform:translateX(-50%);width:80%;}
+.btn{width:100%;cursor:pointer;display:block;animation:breath 1.8s ease-in-out infinite;}
+@keyframes breath{0%{transform:scale(1);}50%{transform:scale(1.08);}100%{transform:scale(1);}}
 </style>
 </head>
 
 <body>
-<div class="wrapper">
-<div class="frame">
-
+<div class="wrapper"><div class="frame">
 <img src="assets/bg.jpg" class="bg">
 <img src="assets/logo.png" class="logo">
 <img src="assets/ip.png" class="ip">
-
 <div class="btnWrapper">
-  <a href="#" id="lineBtn">
-    <img src="assets/btn.png" class="btn">
-  </a>
+  <a href="#" id="lineBtn"><img src="assets/btn.png" class="btn"></a>
 </div>
-
-</div>
-</div>
+</div></div>
 
 <script>
-function uuidv4() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){
-    var r=Math.random()*16|0,v=c=='x'?r:(r&0x3|0x8);
-    return v.toString(16);
-  });
-}
-
+function uuidv4(){return'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){var r=Math.random()*16|0,v=c=='x'?r:(r&0x3|0x8);return v.toString(16);});}
 let clicked=false;
 
 document.getElementById("lineBtn").addEventListener("click",function(e){
@@ -119,20 +57,16 @@ document.getElementById("lineBtn").addEventListener("click",function(e){
   clicked=true;
 
   const eventId=uuidv4();
+  const params={content_name:'line_click'};
+  const opt={eventID:eventId};
 
-  try{
-    fbq('track','Contact',{content_name:'line_click'},{eventID:eventId});
-  }catch(e){}
+  try{fbq('trackSingle','839080675810591','Contact',params,opt);}catch(e){}
+  try{fbq('trackSingle','839080675810591','Lead',params,opt);}catch(e){}
+  try{fbq('trackSingle','941819505011774','Contact',params,opt);}catch(e){}
+  try{fbq('trackSingle','941819505011774','Lead',params,opt);}catch(e){}
 
-  try{
-    fbq('track','Lead',{content_name:'line_click'},{eventID:eventId});
-  }catch(e){}
-
-  setTimeout(function(){
-    window.location.href="https://line.me/R/ti/p/@794qnnum";
-  },150);
+  setTimeout(function(){window.location.href="https://line.me/R/ti/p/@794qnnum";},150);
 });
 </script>
-
 </body>
 </html>
