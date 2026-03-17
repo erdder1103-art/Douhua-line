@@ -60,12 +60,15 @@ document.getElementById("lineBtn").addEventListener("click",function(e){
   const params={content_name:'line_click'};
   const opt={eventID:eventId};
 
+  // 主轉換事件：LINE點擊
   try{fbq('trackSingle','839080675810591','Contact',params,opt);}catch(e){}
-  try{fbq('trackSingle','839080675810591','Lead',params,opt);}catch(e){}
   try{fbq('trackSingle','941819505011774','Contact',params,opt);}catch(e){}
-  try{fbq('trackSingle','941819505011774','Lead',params,opt);}catch(e){}
 
-  setTimeout(function(){window.location.href="https://line.me/R/ti/p/@794qnnum";},150);
+  // 輔助分析事件：自訂事件
+  try{fbq('trackCustom','LineClick',params);}catch(e){}
+
+  // 稍微延長跳轉時間，避免事件還沒送出就離站
+  setTimeout(function(){window.location.href="https://line.me/R/ti/p/@794qnnum";},400);
 });
 </script>
 </body>
