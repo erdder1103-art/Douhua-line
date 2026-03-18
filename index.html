@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>灰胖落空</title>
 
+<!-- Meta Pixel -->
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
 n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
@@ -20,8 +21,8 @@ fbq('trackSingle','941819505011774','PageView');
 </script>
 
 <noscript>
-<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=839080675810591&ev=PageView&noscript=1"/>
-<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=941819505011774&ev=PageView&noscript=1"/>
+  <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=839080675810591&ev=PageView&noscript=1"/>
+  <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=941819505011774&ev=PageView&noscript=1"/>
 </noscript>
 
 <style>
@@ -38,38 +39,66 @@ body{margin:0;background:#000;font-family:system-ui,-apple-system,"PingFang TC",
 </head>
 
 <body>
-<div class="wrapper"><div class="frame">
-<img src="assets/bg.jpg" class="bg">
-<img src="assets/logo.png" class="logo">
-<img src="assets/ip.png" class="ip">
-<div class="btnWrapper">
-  <a href="#" id="lineBtn"><img src="assets/btn.png" class="btn"></a>
+<div class="wrapper">
+  <div class="frame">
+    <img src="assets/bg.jpg" class="bg" alt="" loading="eager">
+    <img src="assets/logo.png" class="logo" alt="" loading="eager">
+    <img src="assets/ip.png" class="ip" alt="" loading="eager">
+
+    <div class="btnWrapper">
+      <!-- href 放真連結，JS 掛了也能跳 -->
+      <a href="https://line.me/R/ti/p/@794qnnum" id="lineBtn" rel="noopener">
+        <img src="assets/btn.png" class="btn" alt="加入LINE" loading="eager">
+      </a>
+    </div>
+  </div>
 </div>
-</div></div>
 
 <script>
-function uuidv4(){return'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){var r=Math.random()*16|0,v=c=='x'?r:(r&0x3|0x8);return v.toString(16);});}
-let clicked=false;
+(function(){
+  const LINE_URL = "https://line.me/R/ti/p/@794qnnum";
 
-document.getElementById("lineBtn").addEventListener("click",function(e){
-  e.preventDefault();
-  if(clicked) return;
-  clicked=true;
+  function uuidv4(){
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){
+      var r=Math.random()*16|0,v=c=='x'?r:(r&0x3|0x8);
+      return v.toString(16);
+    });
+  }
 
-  const eventId=uuidv4();
-  const params={content_name:'line_click'};
-  const opt={eventID:eventId};
+  let clicked = false;
 
-  // 主轉換事件：LINE點擊
-  try{fbq('trackSingle','839080675810591','Contact',params,opt);}catch(e){}
-  try{fbq('trackSingle','941819505011774','Contact',params,opt);}catch(e){}
+  const btn = document.getElementById("lineBtn");
+  if(!btn) return;
 
-  // 輔助分析事件：自訂事件
-  try{fbq('trackCustom','LineClick',params);}catch(e){}
+  btn.addEventListener("click", function(e){
+    e.preventDefault();
+    if(clicked) return;
+    clicked = true;
 
-  // 稍微延長跳轉時間，避免事件還沒送出就離站
-  setTimeout(function(){window.location.href="https://line.me/R/ti/p/@794qnnum";},400);
-});
+    const eventId = uuidv4();
+    const opt = { eventID: eventId };
+
+    // 乾淨、可讀的參數（自訂也OK）
+    const params = {
+      action_source: "website",
+      contact_method: "line",
+      event_source_url: window.location.href
+    };
+
+    // 主轉換事件：Contact（對應後台「聯絡」）
+    try { fbq('trackSingle', '839080675810591', 'Contact', params, opt); } catch(err) {}
+    try { fbq('trackSingle', '941819505011774', 'Contact', params, opt); } catch(err) {}
+
+    // 輔助分析事件：自訂事件（可留可不留）
+    try { fbq('trackSingleCustom', '839080675810591', 'LineClick', params, opt); } catch(err) {}
+    try { fbq('trackSingleCustom', '941819505011774', 'LineClick', params, opt); } catch(err) {}
+
+    // 延遲跳轉讓事件更穩送出
+    setTimeout(function(){
+      window.location.replace(LINE_URL);
+    }, 600);
+  });
+})();
 </script>
 </body>
 </html>
