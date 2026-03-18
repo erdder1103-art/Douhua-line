@@ -35,6 +35,23 @@ body{margin:0;background:#000;font-family:system-ui,-apple-system,"PingFang TC",
 .btnWrapper{position:absolute;bottom:6%;left:50%;transform:translateX(-50%);width:80%;}
 .btn{width:100%;cursor:pointer;display:block;animation:breath 1.8s ease-in-out infinite;}
 @keyframes breath{0%{transform:scale(1);}50%{transform:scale(1.08);}100%{transform:scale(1);}}
+
+/* 讓整張圖變可點的區塊（透明覆蓋，不影響畫面） */
+.tap{
+  position:absolute;
+  inset:0;
+  display:block;
+  cursor:pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 個別可點區塊：依照圖片位置覆蓋（可調） */
+.tap-bg{ inset:0; }
+.tap-logo{ inset:auto; top:-5%; left:50%; transform:translateX(-50%); width:60%; height:22%; }
+.tap-ip{ inset:auto; bottom:12%; left:50%; transform:translateX(-50%); width:90%; height:22%; }
+.tap-btn{ inset:auto; bottom:6%; left:50%; transform:translateX(-50%); width:80%; height:12%; }
+
+.tap-logo, .tap-ip, .tap-btn{ position:absolute; display:block; }
 </style>
 </head>
 
@@ -45,20 +62,31 @@ body{margin:0;background:#000;font-family:system-ui,-apple-system,"PingFang TC",
     <img src="assets/logo.png" class="logo" alt="" loading="eager">
     <img src="assets/ip.png" class="ip" alt="" loading="eager">
 
+    <!-- 原本按鈕圖片保留 -->
     <div class="btnWrapper">
-      <!-- href 放真連結，JS 掛了也能跳 -->
-      <a href="https://line.me/R/ti/p/@794qnnum" id="lineBtn" rel="noopener">
+      <a href="https://line.me/R/ti/p/@794qnnum" class="goLine" data-area="btn" aria-label="加入LINE" rel="noopener">
         <img src="assets/btn.png" class="btn" alt="加入LINE" loading="eager">
       </a>
     </div>
+
+    <!-- 讓每張圖都能點：用透明連結覆蓋 -->
+    <a href="https://line.me/R/ti/p/@794qnnum" class="goLine tap tap-bg" data-area="bg" aria-label="背景點擊前往LINE" rel="noopener"></a>
+    <a href="https://line.me/R/ti/p/@794qnnum" class="goLine tap-logo" data-area="logo" aria-label="Logo點擊前往LINE" rel="noopener"></a>
+    <a href="https://line.me/R/ti/p/@794qnnum" class="goLine tap-ip" data-area="ip" aria-label="IP點擊前往LINE" rel="noopener"></a>
+    <a href="https://line.me/R/ti/p/@794qnnum" class="goLine tap-btn" data-area="btnOverlay" aria-label="按鈕區點擊前往LINE" rel="noopener"></a>
+
   </div>
 </div>
 
 <script>
 (function(){
   const LINE_URL = "https://line.me/R/ti/p/@794qnnum";
+  const REDIRECT_DELAY = 600;
 
   function uuidv4(){
+    if (window.crypto && typeof window.crypto.randomUUID === 'function') {
+      return window.crypto.randomUUID();
+    }
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){
       var r=Math.random()*16|0,v=c=='x'?r:(r&0x3|0x8);
       return v.toString(16);
@@ -67,21 +95,14 @@ body{margin:0;background:#000;font-family:system-ui,-apple-system,"PingFang TC",
 
   let clicked = false;
 
-  const btn = document.getElementById("lineBtn");
-  if(!btn) return;
-
-  btn.addEventListener("click", function(e){
-    e.preventDefault();
-    if(clicked) return;
-    clicked = true;
-
+  function fireEvents(area){
     const eventId = uuidv4();
     const opt = { eventID: eventId };
 
-    // 乾淨、可讀的參數（自訂也OK）
     const params = {
       action_source: "website",
       contact_method: "line",
+      click_area: area || "unknown",
       event_source_url: window.location.href
     };
 
@@ -89,14 +110,34 @@ body{margin:0;background:#000;font-family:system-ui,-apple-system,"PingFang TC",
     try { fbq('trackSingle', '839080675810591', 'Contact', params, opt); } catch(err) {}
     try { fbq('trackSingle', '941819505011774', 'Contact', params, opt); } catch(err) {}
 
-    // 輔助分析事件：自訂事件（可留可不留）
+    // 輔助分析：自訂事件（可留可不留）
     try { fbq('trackSingleCustom', '839080675810591', 'LineClick', params, opt); } catch(err) {}
     try { fbq('trackSingleCustom', '941819505011774', 'LineClick', params, opt); } catch(err) {}
+  }
 
-    // 延遲跳轉讓事件更穩送出
-    setTimeout(function(){
-      window.location.replace(LINE_URL);
-    }, 600);
+  function go(){
+    window.location.replace(LINE_URL);
+  }
+
+  // 綁定所有可點元素
+  const links = document.querySelectorAll('.goLine');
+  links.forEach(function(a){
+    a.addEventListener('click', function(e){
+      // 防止連續多次觸發
+      e.preventDefault();
+      if(clicked) return;
+      clicked = true;
+
+      const area = a.getAttribute('data-area') || 'unknown';
+      fireEvents(area);
+
+      setTimeout(go, REDIRECT_DELAY);
+    });
+  });
+
+  // 從 LINE/外部 App 回來時，重置狀態（避免卡住不能點）
+  window.addEventListener('pageshow', function(){
+    clicked = false;
   });
 })();
 </script>
