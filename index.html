@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>灰胖落空</title>
 
-<!-- Meta Pixel -->
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
 n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
@@ -36,22 +35,11 @@ body{margin:0;background:#000;font-family:system-ui,-apple-system,"PingFang TC",
 .btn{width:100%;cursor:pointer;display:block;animation:breath 1.8s ease-in-out infinite;}
 @keyframes breath{0%{transform:scale(1);}50%{transform:scale(1.08);}100%{transform:scale(1);}}
 
-/* 讓整張圖變可點的區塊（透明覆蓋，不影響畫面） */
-.tap{
-  position:absolute;
-  inset:0;
-  display:block;
-  cursor:pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-
-/* 個別可點區塊：依照圖片位置覆蓋（可調） */
-.tap-bg{ inset:0; }
-.tap-logo{ inset:auto; top:-5%; left:50%; transform:translateX(-50%); width:60%; height:22%; }
-.tap-ip{ inset:auto; bottom:12%; left:50%; transform:translateX(-50%); width:90%; height:22%; }
-.tap-btn{ inset:auto; bottom:6%; left:50%; transform:translateX(-50%); width:80%; height:12%; }
-
-.tap-logo, .tap-ip, .tap-btn{ position:absolute; display:block; }
+.tap{position:absolute;display:block;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.tap-bg{inset:0;}
+.tap-logo{top:-5%;left:50%;transform:translateX(-50%);width:60%;height:22%;}
+.tap-ip{bottom:12%;left:50%;transform:translateX(-50%);width:90%;height:22%;}
+.tap-btn{bottom:6%;left:50%;transform:translateX(-50%);width:80%;height:12%;}
 </style>
 </head>
 
@@ -62,19 +50,16 @@ body{margin:0;background:#000;font-family:system-ui,-apple-system,"PingFang TC",
     <img src="assets/logo.png" class="logo" alt="" loading="eager">
     <img src="assets/ip.png" class="ip" alt="" loading="eager">
 
-    <!-- 原本按鈕圖片保留 -->
     <div class="btnWrapper">
-      <a href="https://line.me/R/ti/p/@794qnnum" class="goLine" data-area="btn" aria-label="加入LINE" rel="noopener">
-        <img src="assets/btn.png" class="btn" alt="加入LINE" loading="eager">
+      <a href="https://line.me/R/ti/p/@794qnnum" class="goLine" data-area="btn" rel="noopener">
+        <img src="assets/btn.png" class="btn" alt="" loading="eager">
       </a>
     </div>
 
-    <!-- 讓每張圖都能點：用透明連結覆蓋 -->
-    <a href="https://line.me/R/ti/p/@794qnnum" class="goLine tap tap-bg" data-area="bg" aria-label="背景點擊前往LINE" rel="noopener"></a>
-    <a href="https://line.me/R/ti/p/@794qnnum" class="goLine tap-logo" data-area="logo" aria-label="Logo點擊前往LINE" rel="noopener"></a>
-    <a href="https://line.me/R/ti/p/@794qnnum" class="goLine tap-ip" data-area="ip" aria-label="IP點擊前往LINE" rel="noopener"></a>
-    <a href="https://line.me/R/ti/p/@794qnnum" class="goLine tap-btn" data-area="btnOverlay" aria-label="按鈕區點擊前往LINE" rel="noopener"></a>
-
+    <a href="https://line.me/R/ti/p/@794qnnum" class="goLine tap tap-bg" data-area="bg" rel="noopener" aria-label=""></a>
+    <a href="https://line.me/R/ti/p/@794qnnum" class="goLine tap tap-logo" data-area="logo" rel="noopener" aria-label=""></a>
+    <a href="https://line.me/R/ti/p/@794qnnum" class="goLine tap tap-ip" data-area="ip" rel="noopener" aria-label=""></a>
+    <a href="https://line.me/R/ti/p/@794qnnum" class="goLine tap tap-btn" data-area="btnOverlay" rel="noopener" aria-label=""></a>
   </div>
 </div>
 
@@ -84,12 +69,9 @@ body{margin:0;background:#000;font-family:system-ui,-apple-system,"PingFang TC",
   const REDIRECT_DELAY = 600;
 
   function uuidv4(){
-    if (window.crypto && typeof window.crypto.randomUUID === 'function') {
-      return window.crypto.randomUUID();
-    }
+    if (window.crypto && typeof window.crypto.randomUUID === 'function') return window.crypto.randomUUID();
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){
-      var r=Math.random()*16|0,v=c=='x'?r:(r&0x3|0x8);
-      return v.toString(16);
+      var r=Math.random()*16|0,v=c=='x'?r:(r&0x3|0x8);return v.toString(16);
     });
   }
 
@@ -98,7 +80,6 @@ body{margin:0;background:#000;font-family:system-ui,-apple-system,"PingFang TC",
   function fireEvents(area){
     const eventId = uuidv4();
     const opt = { eventID: eventId };
-
     const params = {
       action_source: "website",
       contact_method: "line",
@@ -106,24 +87,19 @@ body{margin:0;background:#000;font-family:system-ui,-apple-system,"PingFang TC",
       event_source_url: window.location.href
     };
 
-    // 主轉換事件：Contact（對應後台「聯絡」）
-    try { fbq('trackSingle', '839080675810591', 'Contact', params, opt); } catch(err) {}
-    try { fbq('trackSingle', '941819505011774', 'Contact', params, opt); } catch(err) {}
-
-    // 輔助分析：自訂事件（可留可不留）
-    try { fbq('trackSingleCustom', '839080675810591', 'LineClick', params, opt); } catch(err) {}
-    try { fbq('trackSingleCustom', '941819505011774', 'LineClick', params, opt); } catch(err) {}
+    try { fbq('trackSingle', '839080675810591', 'Contact', params, opt); } catch(e) {}
+    try { fbq('trackSingle', '941819505011774', 'Contact', params, opt); } catch(e) {}
+    try { fbq('trackSingleCustom', '839080675810591', 'LineClick', params, opt); } catch(e) {}
+    try { fbq('trackSingleCustom', '941819505011774', 'LineClick', params, opt); } catch(e) {}
   }
 
   function go(){
     window.location.replace(LINE_URL);
   }
 
-  // 綁定所有可點元素
   const links = document.querySelectorAll('.goLine');
   links.forEach(function(a){
     a.addEventListener('click', function(e){
-      // 防止連續多次觸發
       e.preventDefault();
       if(clicked) return;
       clicked = true;
@@ -135,7 +111,6 @@ body{margin:0;background:#000;font-family:system-ui,-apple-system,"PingFang TC",
     });
   });
 
-  // 從 LINE/外部 App 回來時，重置狀態（避免卡住不能點）
   window.addEventListener('pageshow', function(){
     clicked = false;
   });
