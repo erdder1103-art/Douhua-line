@@ -12,16 +12,13 @@ n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
 (window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
 
-fbq('init','839080675810591');
-fbq('init','941819505011774');
-
-fbq('trackSingle','839080675810591','PageView');
-fbq('trackSingle','941819505011774','PageView');
+fbq('init','1268112997985142');
+fbq('track','PageView');
 </script>
 
 <noscript>
-  <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=839080675810591&ev=PageView&noscript=1"/>
-  <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=941819505011774&ev=PageView&noscript=1"/>
+  <img height="1" width="1" style="display:none"
+       src="https://www.facebook.com/tr?id=1268112997985142&ev=PageView&noscript=1"/>
 </noscript>
 
 <style>
@@ -67,6 +64,7 @@ body{margin:0;background:#000;font-family:system-ui,-apple-system,"PingFang TC",
 (function(){
   const LINE_URL = "https://line.me/R/ti/p/@794qnnum";
   const REDIRECT_DELAY = 600;
+  const PIXEL_ID = "1268112997985142";
 
   function uuidv4(){
     if (window.crypto && typeof window.crypto.randomUUID === 'function') return window.crypto.randomUUID();
@@ -87,10 +85,8 @@ body{margin:0;background:#000;font-family:system-ui,-apple-system,"PingFang TC",
       event_source_url: window.location.href
     };
 
-    try { fbq('trackSingle', '839080675810591', 'Contact', params, opt); } catch(e) {}
-    try { fbq('trackSingle', '941819505011774', 'Contact', params, opt); } catch(e) {}
-    try { fbq('trackSingleCustom', '839080675810591', 'LineClick', params, opt); } catch(e) {}
-    try { fbq('trackSingleCustom', '941819505011774', 'LineClick', params, opt); } catch(e) {}
+    try { fbq('trackSingle', PIXEL_ID, 'Contact', params, opt); } catch(e) {}
+    try { fbq('trackSingleCustom', PIXEL_ID, 'LineClick', params, opt); } catch(e) {}
   }
 
   function go(){
