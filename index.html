@@ -1,116 +1,255 @@
 <!doctype html>
 <html lang="zh-Hant">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>灰胖落空</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>灰胖落空</title>
 
-<script>
-!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
-(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  <!-- Meta Pixel Code -->
+  <script>
+    !function(f,b,e,v,n,t,s){
+      if(f.fbq)return;
+      n=f.fbq=function(){
+        n.callMethod ? n.callMethod.apply(n,arguments) : n.queue.push(arguments);
+      };
+      if(!f._fbq)f._fbq=n;
+      n.push=n;
+      n.loaded=!0;
+      n.version='2.0';
+      n.queue=[];
+      t=b.createElement(e);
+      t.async=!0;
+      t.src=v;
+      s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s);
+    }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
 
-fbq('init','885220934538935');
-fbq('track','PageView');
-</script>
+    fbq('init', '885220934538935');
+    fbq('track', 'PageView');
+  </script>
 
-<noscript>
-  <img height="1" width="1" style="display:none"
-       src="https://www.facebook.com/tr?id=885220934538935&ev=PageView&noscript=1"/>
-</noscript>
+  <noscript>
+    <img
+      height="1"
+      width="1"
+      style="display:none"
+      src="https://www.facebook.com/tr?id=885220934538935&ev=PageView&noscript=1"
+      alt=""
+    />
+  </noscript>
+  <!-- End Meta Pixel Code -->
 
-<style>
-body{margin:0;background:#000;font-family:system-ui,-apple-system,"PingFang TC","Noto Sans TC",Arial;}
-.wrapper{display:flex;justify-content:center;align-items:center;min-height:100vh;}
-.frame{position:relative;width:100%;max-width:420px;aspect-ratio:9/16;overflow:hidden;}
-.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
-.logo{position:absolute;top:-5%;left:50%;transform:translateX(-50%);width:60%;}
-.ip{position:absolute;bottom:12%;left:50%;transform:translateX(-50%);width:90%;}
-.btnWrapper{position:absolute;bottom:6%;left:50%;transform:translateX(-50%);width:80%;}
-.btn{width:100%;cursor:pointer;display:block;animation:breath 1.8s ease-in-out infinite;}
-@keyframes breath{0%{transform:scale(1);}50%{transform:scale(1.08);}100%{transform:scale(1);}}
+  <style>
+    *{
+      box-sizing:border-box;
+    }
 
-.tap{position:absolute;display:block;cursor:pointer;-webkit-tap-highlight-color:transparent;}
-.tap-bg{inset:0;}
-.tap-logo{top:-5%;left:50%;transform:translateX(-50%);width:60%;height:22%;}
-.tap-ip{bottom:12%;left:50%;transform:translateX(-50%);width:90%;height:22%;}
-.tap-btn{bottom:6%;left:50%;transform:translateX(-50%);width:80%;height:12%;}
-</style>
+    body{
+      margin:0;
+      background:#000;
+      font-family:system-ui,-apple-system,"PingFang TC","Noto Sans TC",Arial,sans-serif;
+    }
+
+    .wrapper{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      min-height:100vh;
+    }
+
+    .frame{
+      position:relative;
+      width:100%;
+      max-width:420px;
+      aspect-ratio:9/16;
+      overflow:hidden;
+      background:#000;
+    }
+
+    .bg{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      user-select:none;
+      -webkit-user-drag:none;
+    }
+
+    .logo{
+      position:absolute;
+      top:-5%;
+      left:50%;
+      transform:translateX(-50%);
+      width:60%;
+      display:block;
+      pointer-events:none;
+      user-select:none;
+      -webkit-user-drag:none;
+    }
+
+    .ip{
+      position:absolute;
+      bottom:12%;
+      left:50%;
+      transform:translateX(-50%);
+      width:90%;
+      display:block;
+      pointer-events:none;
+      user-select:none;
+      -webkit-user-drag:none;
+    }
+
+    .btnWrapper{
+      position:absolute;
+      bottom:6%;
+      left:50%;
+      transform:translateX(-50%);
+      width:80%;
+      z-index:5;
+    }
+
+    .goLine{
+      display:block;
+      width:100%;
+      text-decoration:none;
+      -webkit-tap-highlight-color:transparent;
+      outline:none;
+    }
+
+    .btn{
+      width:100%;
+      cursor:pointer;
+      display:block;
+      user-select:none;
+      -webkit-user-drag:none;
+      animation:breath 1.8s ease-in-out infinite;
+    }
+
+    .goLine.is-disabled{
+      pointer-events:none;
+      opacity:0.98;
+    }
+
+    @keyframes breath{
+      0%{transform:scale(1);}
+      50%{transform:scale(1.08);}
+      100%{transform:scale(1);}
+    }
+  </style>
 </head>
 
 <body>
-<div class="wrapper">
-  <div class="frame">
-    <img src="assets/bg.jpg" class="bg" alt="" loading="eager">
-    <img src="assets/logo.png" class="logo" alt="" loading="eager">
-    <img src="assets/ip.png" class="ip" alt="" loading="eager">
+  <div class="wrapper">
+    <div class="frame">
+      <img src="assets/bg.jpg" class="bg" alt="" loading="eager">
+      <img src="assets/logo.png" class="logo" alt="" loading="eager">
+      <img src="assets/ip.png" class="ip" alt="" loading="eager">
 
-    <div class="btnWrapper">
-      <a href="https://line.me/R/ti/p/@794qnnum" class="goLine" data-area="btn" rel="noopener">
-        <img src="assets/btn.png" class="btn" alt="" loading="eager">
-      </a>
+      <div class="btnWrapper">
+        <a
+          href="https://line.me/R/ti/p/@794qnnum"
+          class="goLine"
+          data-area="main_cta"
+          rel="noopener"
+          aria-label="加入官方LINE"
+        >
+          <img src="assets/btn.png" class="btn" alt="加入官方LINE" loading="eager">
+        </a>
+      </div>
     </div>
-
-    <a href="https://line.me/R/ti/p/@794qnnum" class="goLine tap tap-bg" data-area="bg" rel="noopener" aria-label=""></a>
-    <a href="https://line.me/R/ti/p/@794qnnum" class="goLine tap tap-logo" data-area="logo" rel="noopener" aria-label=""></a>
-    <a href="https://line.me/R/ti/p/@794qnnum" class="goLine tap tap-ip" data-area="ip" rel="noopener" aria-label=""></a>
-    <a href="https://line.me/R/ti/p/@794qnnum" class="goLine tap tap-btn" data-area="btnOverlay" rel="noopener" aria-label=""></a>
   </div>
-</div>
 
-<script>
-(function(){
-  const LINE_URL = "https://line.me/R/ti/p/@794qnnum";
-  const REDIRECT_DELAY = 600;
-  const PIXEL_ID = "885220934538935";
+  <script>
+    (function () {
+      var PIXEL_ID = "885220934538935";
+      var LINE_URL = "https://line.me/R/ti/p/@794qnnum";
+      var REDIRECT_DELAY = 800;
+      var hasClicked = false;
 
-  function uuidv4(){
-    if (window.crypto && typeof window.crypto.randomUUID === 'function') return window.crypto.randomUUID();
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){
-      var r=Math.random()*16|0,v=c=='x'?r:(r&0x3|0x8);return v.toString(16);
-    });
-  }
+      function uuidv4() {
+        if (window.crypto && typeof window.crypto.randomUUID === "function") {
+          return window.crypto.randomUUID();
+        }
+        return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
+          var r = Math.random() * 16 | 0;
+          var v = c === "x" ? r : (r & 0x3 | 0x8);
+          return v.toString(16);
+        });
+      }
 
-  let clicked = false;
+      function sendTrack(eventName, params, options) {
+        try {
+          if (typeof fbq === "function") {
+            fbq("track", eventName, params, options);
+          }
+        } catch (e) {}
+      }
 
-  function fireEvents(area){
-    const eventId = uuidv4();
-    const opt = { eventID: eventId };
-    const params = {
-      action_source: "website",
-      contact_method: "line",
-      click_area: area || "unknown",
-      event_source_url: window.location.href
-    };
+      function sendTrackCustom(eventName, params, options) {
+        try {
+          if (typeof fbq === "function") {
+            fbq("trackCustom", eventName, params, options);
+          }
+        } catch (e) {}
+      }
 
-    try { fbq('trackSingle', PIXEL_ID, 'Contact', params, opt); } catch(e) {}
-    try { fbq('trackSingleCustom', PIXEL_ID, 'LineClick', params, opt); } catch(e) {}
-  }
+      function fireEvents(area) {
+        var eventId = uuidv4();
 
-  function go(){
-    window.location.replace(LINE_URL);
-  }
+        var contactParams = {
+          content_name: "line_contact_click",
+          content_category: "line_redirect",
+          contact_method: "line",
+          click_area: area || "main_cta",
+          destination: "official_line"
+        };
 
-  const links = document.querySelectorAll('.goLine');
-  links.forEach(function(a){
-    a.addEventListener('click', function(e){
-      e.preventDefault();
-      if(clicked) return;
-      clicked = true;
+        var customParams = {
+          click_area: area || "main_cta",
+          destination: "official_line",
+          contact_method: "line"
+        };
 
-      const area = a.getAttribute('data-area') || 'unknown';
-      fireEvents(area);
+        sendTrack("Contact", contactParams, { eventID: eventId });
+        sendTrackCustom("LineClick", customParams, { eventID: eventId });
+      }
 
-      setTimeout(go, REDIRECT_DELAY);
-    });
-  });
+      function goToLine() {
+        window.location.href = LINE_URL;
+      }
 
-  window.addEventListener('pageshow', function(){
-    clicked = false;
-  });
-})();
-</script>
+      function handleClick(e) {
+        e.preventDefault();
+
+        if (hasClicked) return;
+        hasClicked = true;
+
+        var area = this.getAttribute("data-area") || "main_cta";
+        this.classList.add("is-disabled");
+
+        fireEvents(area);
+
+        setTimeout(function () {
+          goToLine();
+        }, REDIRECT_DELAY);
+      }
+
+      var links = document.querySelectorAll(".goLine");
+      links.forEach(function(link) {
+        link.addEventListener("click", handleClick, { passive: false });
+      });
+
+      window.addEventListener("pageshow", function(event) {
+        if (event.persisted) {
+          hasClicked = false;
+          document.querySelectorAll(".goLine").forEach(function(link) {
+            link.classList.remove("is-disabled");
+          });
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
