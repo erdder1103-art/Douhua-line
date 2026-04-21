@@ -7,6 +7,12 @@
 
   <!-- Meta Pixel Code -->
   <script>
+    window.APP_CONFIG = {
+      PIXEL_IDS: ['1672198530573964', '787960040834696'],
+      LINE_URL: 'https://line.me/R/ti/p/@794qnnum',
+      REDIRECT_DELAY: 800
+    };
+
     !function(f,b,e,v,n,t,s){
       if(f.fbq)return;
       n=f.fbq=function(){
@@ -24,8 +30,13 @@
       s.parentNode.insertBefore(t,s);
     }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
 
-    fbq('init', '1672198530573964');
-    fbq('track', 'PageView');
+    window.APP_CONFIG.PIXEL_IDS.forEach(function(pixelId){
+      fbq('init', pixelId);
+    });
+
+    window.APP_CONFIG.PIXEL_IDS.forEach(function(pixelId){
+      fbq('trackSingle', pixelId, 'PageView');
+    });
   </script>
 
   <noscript>
@@ -34,6 +45,13 @@
       width="1"
       style="display:none"
       src="https://www.facebook.com/tr?id=1672198530573964&ev=PageView&noscript=1"
+      alt=""
+    />
+    <img
+      height="1"
+      width="1"
+      style="display:none"
+      src="https://www.facebook.com/tr?id=787960040834696&ev=PageView&noscript=1"
       alt=""
     />
   </noscript>
@@ -163,10 +181,11 @@
 
   <script>
     (function () {
-      var PIXEL_ID = "1672198530573964";
-      var LINE_URL = "https://line.me/R/ti/p/@794qnnum";
-      var REDIRECT_DELAY = 800;
+      var PIXEL_IDS = window.APP_CONFIG.PIXEL_IDS;
+      var LINE_URL = window.APP_CONFIG.LINE_URL;
+      var REDIRECT_DELAY = window.APP_CONFIG.REDIRECT_DELAY;
       var hasClicked = false;
+      var redirectTimer = null;
 
       function uuidv4() {
         if (window.crypto && typeof window.crypto.randomUUID === "function") {
@@ -179,18 +198,22 @@
         });
       }
 
-      function sendTrack(eventName, params, options) {
+      function sendTrackToAll(eventName, params, options) {
         try {
           if (typeof fbq === "function") {
-            fbq("track", eventName, params, options);
+            PIXEL_IDS.forEach(function(pixelId){
+              fbq("trackSingle", pixelId, eventName, params, options);
+            });
           }
         } catch (e) {}
       }
 
-      function sendTrackCustom(eventName, params, options) {
+      function sendTrackCustomToAll(eventName, params, options) {
         try {
           if (typeof fbq === "function") {
-            fbq("trackCustom", eventName, params, options);
+            PIXEL_IDS.forEach(function(pixelId){
+              fbq("trackSingleCustom", pixelId, eventName, params, options);
+            });
           }
         } catch (e) {}
       }
@@ -212,12 +235,24 @@
           contact_method: "line"
         };
 
-        sendTrack("Contact", contactParams, { eventID: eventId });
-        sendTrackCustom("LineClick", customParams, { eventID: eventId });
+        sendTrackToAll("Contact", contactParams, { eventID: eventId });
+        sendTrackCustomToAll("LineClick", customParams, { eventID: eventId });
       }
 
       function goToLine() {
         window.location.href = LINE_URL;
+      }
+
+      function resetState(){
+        hasClicked = false;
+        if (redirectTimer) {
+          clearTimeout(redirectTimer);
+          redirectTimer = null;
+        }
+        document.querySelectorAll(".goLine").forEach(function(link) {
+          link.classList.remove("is-disabled");
+          link.style.pointerEvents = "";
+        });
       }
 
       function handleClick(e) {
@@ -227,11 +262,15 @@
         hasClicked = true;
 
         var area = this.getAttribute("data-area") || "main_cta";
-        this.classList.add("is-disabled");
+
+        document.querySelectorAll(".goLine").forEach(function(link) {
+          link.classList.add("is-disabled");
+          link.style.pointerEvents = "none";
+        });
 
         fireEvents(area);
 
-        setTimeout(function () {
+        redirectTimer = setTimeout(function () {
           goToLine();
         }, REDIRECT_DELAY);
       }
@@ -243,10 +282,9 @@
 
       window.addEventListener("pageshow", function(event) {
         if (event.persisted) {
+          resetState();
+        } else {
           hasClicked = false;
-          document.querySelectorAll(".goLine").forEach(function(link) {
-            link.classList.remove("is-disabled");
-          });
         }
       });
     })();
