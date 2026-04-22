@@ -8,7 +8,7 @@
   <!-- Meta Pixel Code -->
   <script>
     window.APP_CONFIG = {
-      PIXEL_IDS: ['1672198530573964', '787960040834696'],
+      PIXEL_ID: '787960040834696',
       LINE_URL: 'https://line.me/R/ti/p/@794qnnum',
       REDIRECT_DELAY: 800
     };
@@ -30,23 +30,11 @@
       s.parentNode.insertBefore(t,s);
     }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
 
-    window.APP_CONFIG.PIXEL_IDS.forEach(function(pixelId){
-      fbq('init', pixelId);
-    });
-
-    window.APP_CONFIG.PIXEL_IDS.forEach(function(pixelId){
-      fbq('trackSingle', pixelId, 'PageView');
-    });
+    fbq('init', window.APP_CONFIG.PIXEL_ID);
+    fbq('track', 'PageView');
   </script>
 
   <noscript>
-    <img
-      height="1"
-      width="1"
-      style="display:none"
-      src="https://www.facebook.com/tr?id=1672198530573964&ev=PageView&noscript=1"
-      alt=""
-    />
     <img
       height="1"
       width="1"
@@ -181,7 +169,7 @@
 
   <script>
     (function () {
-      var PIXEL_IDS = window.APP_CONFIG.PIXEL_IDS;
+      var PIXEL_ID = window.APP_CONFIG.PIXEL_ID;
       var LINE_URL = window.APP_CONFIG.LINE_URL;
       var REDIRECT_DELAY = window.APP_CONFIG.REDIRECT_DELAY;
       var hasClicked = false;
@@ -198,22 +186,18 @@
         });
       }
 
-      function sendTrackToAll(eventName, params, options) {
+      function sendTrack(eventName, params, options) {
         try {
           if (typeof fbq === "function") {
-            PIXEL_IDS.forEach(function(pixelId){
-              fbq("trackSingle", pixelId, eventName, params, options);
-            });
+            fbq("track", eventName, params, options);
           }
         } catch (e) {}
       }
 
-      function sendTrackCustomToAll(eventName, params, options) {
+      function sendTrackCustom(eventName, params, options) {
         try {
           if (typeof fbq === "function") {
-            PIXEL_IDS.forEach(function(pixelId){
-              fbq("trackSingleCustom", pixelId, eventName, params, options);
-            });
+            fbq("trackCustom", eventName, params, options);
           }
         } catch (e) {}
       }
@@ -235,8 +219,8 @@
           contact_method: "line"
         };
 
-        sendTrackToAll("Contact", contactParams, { eventID: eventId });
-        sendTrackCustomToAll("LineClick", customParams, { eventID: eventId });
+        sendTrack("Contact", contactParams, { eventID: eventId });
+        sendTrackCustom("LineClick", customParams, { eventID: eventId });
       }
 
       function goToLine() {
