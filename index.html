@@ -8,7 +8,10 @@
   <!-- Meta Pixel Code -->
   <script>
     window.APP_CONFIG = {
-      PIXEL_ID: '787960040834696',
+      PIXEL_IDS: [
+        '787960040834696',
+        '1672198530573964'
+      ],
       LINE_URL: 'https://line.me/R/ti/p/@794qnnum',
       REDIRECT_DELAY: 800
     };
@@ -30,25 +33,23 @@
       s.parentNode.insertBefore(t,s);
     }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
 
-    fbq('init', window.APP_CONFIG.PIXEL_ID);
+    window.APP_CONFIG.PIXEL_IDS.forEach(function(pixelId){
+      fbq('init', pixelId);
+    });
+
     fbq('track', 'PageView');
   </script>
 
   <noscript>
-    <img
-      height="1"
-      width="1"
-      style="display:none"
-      src="https://www.facebook.com/tr?id=787960040834696&ev=PageView&noscript=1"
-      alt=""
-    />
+    <img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=787960040834696&ev=PageView&noscript=1" alt=""/>
+    <img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=1672198530573964&ev=PageView&noscript=1" alt=""/>
   </noscript>
   <!-- End Meta Pixel Code -->
 
   <style>
-    *{
-      box-sizing:border-box;
-    }
+    *{box-sizing:border-box;}
 
     body{
       margin:0;
@@ -169,7 +170,6 @@
 
   <script>
     (function () {
-      var PIXEL_ID = window.APP_CONFIG.PIXEL_ID;
       var LINE_URL = window.APP_CONFIG.LINE_URL;
       var REDIRECT_DELAY = window.APP_CONFIG.REDIRECT_DELAY;
       var hasClicked = false;
@@ -189,7 +189,7 @@
       function sendTrack(eventName, params, options) {
         try {
           if (typeof fbq === "function") {
-            fbq("track", eventName, params, options);
+            fbq("track", eventName, params || {}, options || {});
           }
         } catch (e) {}
       }
@@ -197,30 +197,37 @@
       function sendTrackCustom(eventName, params, options) {
         try {
           if (typeof fbq === "function") {
-            fbq("trackCustom", eventName, params, options);
+            fbq("trackCustom", eventName, params || {}, options || {});
           }
         } catch (e) {}
       }
 
       function fireEvents(area) {
-        var eventId = uuidv4();
+        var baseArea = area || "main_cta";
 
-        var contactParams = {
+        var commonParams = {
           content_name: "line_contact_click",
           content_category: "line_redirect",
           contact_method: "line",
-          click_area: area || "main_cta",
+          click_area: baseArea,
           destination: "official_line"
         };
 
-        var customParams = {
-          click_area: area || "main_cta",
+        sendTrack("Contact", commonParams, {
+          eventID: "contact_" + uuidv4()
+        });
+
+        sendTrack("Lead", commonParams, {
+          eventID: "lead_" + uuidv4()
+        });
+
+        sendTrackCustom("LineClick", {
+          click_area: baseArea,
           destination: "official_line",
           contact_method: "line"
-        };
-
-        sendTrack("Contact", contactParams, { eventID: eventId });
-        sendTrackCustom("LineClick", customParams, { eventID: eventId });
+        }, {
+          eventID: "lineclick_" + uuidv4()
+        });
       }
 
       function goToLine() {
@@ -233,6 +240,7 @@
           clearTimeout(redirectTimer);
           redirectTimer = null;
         }
+
         document.querySelectorAll(".goLine").forEach(function(link) {
           link.classList.remove("is-disabled");
           link.style.pointerEvents = "";
@@ -259,8 +267,7 @@
         }, REDIRECT_DELAY);
       }
 
-      var links = document.querySelectorAll(".goLine");
-      links.forEach(function(link) {
+      document.querySelectorAll(".goLine").forEach(function(link) {
         link.addEventListener("click", handleClick, { passive: false });
       });
 
