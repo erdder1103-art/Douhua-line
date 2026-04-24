@@ -8,10 +8,7 @@
   <!-- Meta Pixel Code -->
   <script>
     window.APP_CONFIG = {
-      PIXEL_IDS: [
-        '1552608176255688',
-        '1672198530573964'
-      ],
+      PIXEL_ID: '1552608176255688',
       LINE_URL: 'https://line.me/R/ti/p/@794qnnum',
       REDIRECT_DELAY: 800
     };
@@ -33,117 +30,28 @@
       s.parentNode.insertBefore(t,s);
     }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
 
-    window.APP_CONFIG.PIXEL_IDS.forEach(function(pixelId){
-      fbq('init', pixelId);
-    });
-
+    fbq('init', window.APP_CONFIG.PIXEL_ID);
     fbq('track', 'PageView');
   </script>
 
   <noscript>
     <img height="1" width="1" style="display:none"
-      src="https://www.facebook.com/tr?id=787960040834696&ev=PageView&noscript=1" alt=""/>
-    <img height="1" width="1" style="display:none"
-      src="https://www.facebook.com/tr?id=1672198530573964&ev=PageView&noscript=1" alt=""/>
+      src="https://www.facebook.com/tr?id=1552608176255688&ev=PageView&noscript=1" alt=""/>
   </noscript>
-  <!-- End Meta Pixel Code -->
 
   <style>
     *{box-sizing:border-box;}
-
-    body{
-      margin:0;
-      background:#000;
-      font-family:system-ui,-apple-system,"PingFang TC","Noto Sans TC",Arial,sans-serif;
-    }
-
-    .wrapper{
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      min-height:100vh;
-    }
-
-    .frame{
-      position:relative;
-      width:100%;
-      max-width:420px;
-      aspect-ratio:9/16;
-      overflow:hidden;
-      background:#000;
-    }
-
-    .bg{
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-      user-select:none;
-      -webkit-user-drag:none;
-    }
-
-    .logo{
-      position:absolute;
-      top:-5%;
-      left:50%;
-      transform:translateX(-50%);
-      width:60%;
-      display:block;
-      pointer-events:none;
-      user-select:none;
-      -webkit-user-drag:none;
-    }
-
-    .ip{
-      position:absolute;
-      bottom:12%;
-      left:50%;
-      transform:translateX(-50%);
-      width:90%;
-      display:block;
-      pointer-events:none;
-      user-select:none;
-      -webkit-user-drag:none;
-    }
-
-    .btnWrapper{
-      position:absolute;
-      bottom:6%;
-      left:50%;
-      transform:translateX(-50%);
-      width:80%;
-      z-index:5;
-    }
-
-    .goLine{
-      display:block;
-      width:100%;
-      text-decoration:none;
-      -webkit-tap-highlight-color:transparent;
-      outline:none;
-    }
-
-    .btn{
-      width:100%;
-      cursor:pointer;
-      display:block;
-      user-select:none;
-      -webkit-user-drag:none;
-      animation:breath 1.8s ease-in-out infinite;
-    }
-
-    .goLine.is-disabled{
-      pointer-events:none;
-      opacity:0.98;
-    }
-
-    @keyframes breath{
-      0%{transform:scale(1);}
-      50%{transform:scale(1.08);}
-      100%{transform:scale(1);}
-    }
+    body{margin:0;background:#000;font-family:system-ui,-apple-system,"PingFang TC","Noto Sans TC",Arial,sans-serif;}
+    .wrapper{display:flex;justify-content:center;align-items:center;min-height:100vh;}
+    .frame{position:relative;width:100%;max-width:420px;aspect-ratio:9/16;overflow:hidden;background:#000;}
+    .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;user-select:none;-webkit-user-drag:none;}
+    .logo{position:absolute;top:-5%;left:50%;transform:translateX(-50%);width:60%;display:block;pointer-events:none;user-select:none;-webkit-user-drag:none;}
+    .ip{position:absolute;bottom:12%;left:50%;transform:translateX(-50%);width:90%;display:block;pointer-events:none;user-select:none;-webkit-user-drag:none;}
+    .btnWrapper{position:absolute;bottom:6%;left:50%;transform:translateX(-50%);width:80%;z-index:5;}
+    .goLine{display:block;width:100%;text-decoration:none;-webkit-tap-highlight-color:transparent;outline:none;}
+    .btn{width:100%;cursor:pointer;display:block;user-select:none;-webkit-user-drag:none;animation:breath 1.8s ease-in-out infinite;}
+    .goLine.is-disabled{pointer-events:none;opacity:0.98;}
+    @keyframes breath{0%{transform:scale(1);}50%{transform:scale(1.08);}100%{transform:scale(1);}}
   </style>
 </head>
 
@@ -155,13 +63,7 @@
       <img src="assets/ip.png" class="ip" alt="" loading="eager">
 
       <div class="btnWrapper">
-        <a
-          href="https://line.me/R/ti/p/@794qnnum"
-          class="goLine"
-          data-area="main_cta"
-          rel="noopener"
-          aria-label="加入官方LINE"
-        >
+        <a href="https://line.me/R/ti/p/@794qnnum" class="goLine" data-area="main_cta" rel="noopener" aria-label="加入官方LINE">
           <img src="assets/btn.png" class="btn" alt="加入官方LINE" loading="eager">
         </a>
       </div>
@@ -213,21 +115,9 @@
           destination: "official_line"
         };
 
-        sendTrack("Contact", commonParams, {
-          eventID: "contact_" + uuidv4()
-        });
-
-        sendTrack("Lead", commonParams, {
-          eventID: "lead_" + uuidv4()
-        });
-
-        sendTrackCustom("LineClick", {
-          click_area: baseArea,
-          destination: "official_line",
-          contact_method: "line"
-        }, {
-          eventID: "lineclick_" + uuidv4()
-        });
+        sendTrack("Contact", commonParams, { eventID: "contact_" + uuidv4() });
+        sendTrack("Lead", commonParams, { eventID: "lead_" + uuidv4() });
+        sendTrackCustom("LineClick", commonParams, { eventID: "lineclick_" + uuidv4() });
       }
 
       function goToLine() {
@@ -249,10 +139,9 @@
 
       function handleClick(e) {
         e.preventDefault();
-
         if (hasClicked) return;
-        hasClicked = true;
 
+        hasClicked = true;
         var area = this.getAttribute("data-area") || "main_cta";
 
         document.querySelectorAll(".goLine").forEach(function(link) {
